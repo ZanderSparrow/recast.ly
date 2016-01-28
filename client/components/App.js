@@ -7,14 +7,16 @@ class App extends React.Component {
       listOfVideos: []
     };
 
+  }
+
+  componentDidMount() {
     var self = this;
-    searchYouTube({q: 'cats'}, function(theData) {
+    searchYouTube({q: 'cats', max: 5, key: YOUTUBE_API_KEY}, function(theData) {
       self.setState({
         currentVideo: theData[0],
         listOfVideos: theData
       });
     });
-
   }
 
   changeVideo(e) {
@@ -23,10 +25,20 @@ class App extends React.Component {
     });
   }
 
+  searchVideo(query) {
+    var self = this;
+    searchYouTube({q: query.target.value, max: 5, key: YOUTUBE_API_KEY}, function(theData) {
+      self.setState({
+        currentVideo: theData[0],
+        listOfVideos: theData
+      });
+    });
+  }
+
   render() {
     return (
       <div>
-        <Nav />
+        <Nav searchFn={this.searchVideo.bind(this)} />
         <div className="col-md-7">
           <VideoPlayer currentVideo={this.state.currentVideo} />
         </div>

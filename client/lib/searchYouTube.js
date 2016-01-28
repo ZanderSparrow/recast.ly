@@ -5,9 +5,10 @@ var searchYouTube = (options, callback) => {
     type: 'GET',
     contentType: 'json',
     data: {
-      key: window.YOUTUBE_API_KEY,
       part: 'id,snippet',
-      q: options.q
+      q: options.q,
+      max: options.max,
+      key: options.key,
     },
     success: function(data) {
       callback(data.items);
