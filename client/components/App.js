@@ -3,16 +3,25 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      currentVideo: exampleVideoData[0],
-      listOfVideos: exampleVideoData
+      currentVideo: {},
+      listOfVideos: []
     };
+
+    var self = this;
+    searchYouTube({q: 'cats'}, function(theData) {
+      self.setState({
+        currentVideo: theData[0],
+        listOfVideos: theData
+      });
+    });
+
   }
 
   changeVideo(e) {
     this.setState({
-      currentVideo: exampleVideoData[e.target.id]
+      currentVideo: this.state.listOfVideos[e.target.id]
     });
-  } 
+  }
 
   render() {
     return (
