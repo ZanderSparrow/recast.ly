@@ -25,6 +25,19 @@ class App extends React.Component {
     });
   }
 
+  debouncedSearchVideo(query) {
+    var timeout;
+    var wait = 400;
+    var func = this.searchVideo;
+    var self = this;
+    var later = function() {
+      timeout = null;
+      func.call(self, query);
+    }
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  }
+
   searchVideo(query) {
     var self = this;
     searchYouTube({q: query.target.value, max: 5, key: YOUTUBE_API_KEY}, function(theData) {
@@ -38,7 +51,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav searchFn={this.searchVideo.bind(this)} />
+        <Nav searchFn={this.debouncedSearchVideo.bind(this)} />
         <div className="col-md-7">
           <VideoPlayer currentVideo={this.state.currentVideo} />
         </div>
