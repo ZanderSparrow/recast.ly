@@ -21,7 +21,7 @@ class App extends React.Component {
 
   changeVideo(e) {
     this.setState({
-      currentVideo: this.state.listOfVideos[e.target.id]
+      currentVideo: this.state.listOfVideos[e.target.dataset.index]
     });
   }
 
