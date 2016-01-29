@@ -75,3 +75,9 @@ body {
   height: 90px;
   width: 120px;
 }
+
+.main-video-description:hover {
+  cursor: pointer;
+  color: darkblue;
+  font-size: 1.05em;
+}

@@ -4,6 +4,7 @@ class App extends React.Component {
 
     this.state = {
       currentVideo: {},
+      currentVideoDetails: {},
       listOfVideos: []
     };
 
@@ -17,6 +18,7 @@ class App extends React.Component {
         listOfVideos: theData
       });
     });
+
   }
 
   changeVideo(e) {
@@ -50,12 +52,26 @@ class App extends React.Component {
     });
   }
 
+  getDetails() {
+    var self = this;
+    getVideoDetails({id: self.state.currentVideo.id.videoId, key: YOUTUBE_API_KEY}, function(theData) {
+      console.log(theData);
+      self.setState({
+        currentVideoDetails: {
+          likes: theData[0].statistics.likeCount,
+          dislikes: theData[0].statistics.dislikeCount,
+          views: theData[0].statistics.viewCount
+        }
+      });
+    });
+  }
+
   render() {
     return (
       <div>
         <Nav searchFn={this.debouncedSearchVideo.bind(this)} />
         <div className="col-md-7">
-          <VideoPlayer currentVideo={this.state.currentVideo} />
+          <VideoPlayer currentVideo={this.state.currentVideo} currentVideoDetails={this.state.currentVideoDetails} theDeetsFn={this.getDetails.bind(this)} />
         </div>
         <div className="col-md-5">
           <VideoList theVideos={this.state.listOfVideos} changeVideoFn={this.changeVideo.bind(this)}/>

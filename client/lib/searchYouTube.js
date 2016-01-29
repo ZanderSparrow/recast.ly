@@ -23,4 +23,27 @@ var searchYouTube = (options, callback) => {
   });
 };
 
+var getVideoDetails = (options, callback) => {
+  console.log(options.id);
+  $.ajax({
+    url: 'https://www.googleapis.com/youtube/v3/videos',
+    type: 'GET',
+    contentType: 'json',
+    data: {
+      part: 'snippet, statistics',
+      key: options.key,
+      id: options.id
+    },
+    success: (data) => {
+      if (data) {
+        callback(data.items);
+      }
+    },
+    error: (err) => {
+      console.log("You got the " + JSON.stringify(err) + " error. Oh no.");
+    }
+  });
+}
+
 window.searchYouTube = searchYouTube;
+window.getVideoDetails = getVideoDetails;
