@@ -7,16 +7,18 @@ var searchYouTube = (options, callback) => {
     data: {
       part: 'id,snippet',
       q: options.q,
-      max: options.max,
+      maxResults: options.max,
       key: options.key,
+      type: 'video',
+      videoEmbeddable: 'true'
     },
     success: function(data) {
-      callback(data.items);
-      // console.log('success!');
-      // console.log(data);
+      if(data) {
+        callback(data.items);
+      }
     },
     error: function(err) {
-      // console.error('no good!', err.responseText);
+      console.log("You got the " + JSON.stringify(err) + " error. Oh no.");
     }
   });
 };

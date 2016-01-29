@@ -21,7 +21,7 @@ class App extends React.Component {
 
   changeVideo(e) {
     this.setState({
-      currentVideo: this.state.listOfVideos[e.target.id]
+      currentVideo: this.state.listOfVideos[e.target.dataset.index]
     });
   }
 
@@ -32,7 +32,9 @@ class App extends React.Component {
     var self = this;
     var later = function() {
       timeout = null;
-      func.call(self, query);
+      if(query) {
+        func.call(self, query);
+      }
     }
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
